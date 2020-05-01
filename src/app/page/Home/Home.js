@@ -7,6 +7,7 @@ import React from "react";
 import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
+import Form from "app/shared/Form";
 
 import HeaderImage1 from "../../../img/HeaderImage1.webp";
 import HeaderImage2 from "../../../img/HeaderImage2.webp";
@@ -379,6 +380,50 @@ const HomePage = ({ auth, history }) => {
 
   return (
     <Page isLoaded={isLoaded} LoadingComponent={LoadingComponent}>
+      <div style={{ border: "solid 1px red", height: "400px", width: "600px", padding: "24px" }}>
+        <Form // figure out how to properly wrap the formik
+          // object; expose the form gorup elements we want;
+          //they should wrap the material ui formik components
+          // validationSchema={validations.createMission}
+          initialValues={{
+            THIS_IS_A_NAME: "",
+            lastName: "",
+            email: "",
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          <Form.FormContainer>
+            <Form.Group>
+              {/* Error handling and event handling should live where form lives.*/}
+              <Form.TextInput
+                name="THIS_IS_A_NAME"
+                onInput={(event) => {
+                  console.log(event.target.value);
+                }}
+                label="Mission title"
+                helperText="This is some helping text"
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.TextInput
+                name="recipient"
+                onInput={(event) => console.log(event.target.value)}
+                label="Assign a recipient"
+                helperText="Name or Phone number"
+                required
+              />
+            </Form.Group>
+
+            <button type="submit">submit</button>
+          </Form.FormContainer>
+        </Form>
+      </div>
       {isEmpty ? (
         <Grid container>
           <SignInHeaderComponent history={history} />

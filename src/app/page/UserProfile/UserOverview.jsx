@@ -4,6 +4,8 @@ import _ from "lodash";
 import React from "react";
 
 import { H5 } from "../../component";
+import Form from "app/shared/Form";
+import * as validations from "app/utils/validationSchemas";
 import ProfileImage from "./ProfileImage";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +33,37 @@ const UserStatus = ({ profile, setProfile, view }) => {
 
   return (
     <Grid container direction="column" justify="center" className={classes.root} spacing={2}>
+      <Form
+        initialValues={{
+          displayName: "",
+          address: "",
+        }}
+        validationSchema={validations.profile}
+      >
+        <Form.FormContainer>
+          <Form.Group>
+            <Form.TextField
+              disabled={view === "view"}
+              fullWidth
+              id="displayName"
+              label="Display Name"
+              name="displayName"
+              placeholder="Your name..."
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.TextInput
+              disabled={view === "view"}
+              fullWidth
+              id="address"
+              label="Address"
+              name="address"
+              placeholder="Your address..."
+            />
+          </Form.Group>
+        </Form.FormContainer>
+      </Form>
+
       <ProfileImage classes={classes} profile={profile} setProfile={setProfile} />
       <Grid item container spacing={1} direction="column">
         <Grid item container>
